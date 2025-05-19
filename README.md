@@ -64,6 +64,13 @@ docker run -d -p 5001:5001 --name mtcars-api flask-app-hochan:1.0
 ```
 
 ## API Endpoints
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/health` | GET | Health check |
+| `/predict` | POST | Predict MPG based on car features |
+| `/model/info` | GET | Get model information and metrics |
+| `/model/retrain` | POST | Retrain the model |
+
 
 ### 1. Health Check
 ```bash
@@ -148,11 +155,22 @@ The linear regression model achieves:
 - RMSE: 3.183
 - Sample Size: 25 observations
 
-## Docker hub (public repo)
-- docker.io/ohsonoresearch/mtcars-api:latest
-- size: 964MB
-```
+## Docker Hub Repository
+The application is available as a Docker image:
+- **Repository:** docker.io/ohsonoresearch/mtcars-api
+- **Tag:** latest
+- **Size:** 976MB
+
+### Building and Pushing to Docker Hub
+To build and push the multi-architecture image:
+```bash
+# Create and use a new builder instance
 docker buildx create --use
 
+# Build and push the image
 docker buildx build --platform linux/amd64 -t docker.io/ohsonoresearch/mtcars-api:latest . --push
+```
+or simply run this:
+```
+docker_hub_build.sh
 ```
