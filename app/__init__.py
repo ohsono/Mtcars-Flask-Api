@@ -13,7 +13,7 @@ Example:
 """
 
 __version__ = '1.0.0'
-__author__ = 'UCLA MASDS'
+__author__ = 'Hochan Son'
 
 # Import core components
 from .model import MtcarsModel
