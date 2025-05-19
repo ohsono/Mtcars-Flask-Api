@@ -1,0 +1,8 @@
+services:
+  app-slim:
+    build: .
+    volumes:
+      - ./app:/app/app
+      - ./Data:/app/Data
+    ports:
+      - 5001:5001
