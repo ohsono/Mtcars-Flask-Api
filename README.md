@@ -13,7 +13,7 @@ This project implements a Flask-based REST API for predicting MPG (Miles Per Gal
 - [x] Containerize the application using Docker
 - [x] Create a functional Flask API
 - [x] Push the image to DockerHub
-- [ ] Deploy to Google Cloud Run
+- [x] Deploy to Google Cloud Run
 
 ## Project Structure
 ```
@@ -69,7 +69,7 @@ docker run -d -p 5001:5001 --name mtcars-api flask-app-hochan:1.0
 | `/health` | GET | Health check |
 | `/predict` | POST | Predict MPG based on car features |
 | `/model/info` | GET | Get model information and metrics |
-| `/model/retrain` | POST | Retrain the model |
+| `/model/retrain` | POST | Retrain the model | (WIP)
 
 
 ### 1. Health Check
@@ -159,7 +159,7 @@ The linear regression model achieves:
 The application is available as a Docker image:
 - **Repository:** docker.io/ohsonoresearch/mtcars-api
 - **Tag:** latest
-- **Size:** 976MB
+- **Size:** 976MB (444.86 MB, compressed)
 
 ### Building and Pushing to Docker Hub
 To build and push the multi-architecture image:
