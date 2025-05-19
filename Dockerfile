@@ -10,15 +10,11 @@ RUN apt-get update && \
     python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
+COPY requirements.txt ./requirements.txt
+
 # Install Python packages with security updates
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
-    pip install --no-cache-dir \
-    flask==2.0.1 \
-    werkzeug==2.0.1 \
-    scikit-learn==1.3.2 \
-    pandas==2.0.3 \
-    numpy==1.26.0 \
-    pytest==7.4.0
+    pip install -r ./requirements.txt
 
 # Create data directory and copy data file
 RUN mkdir -p Data
