@@ -69,7 +69,6 @@ docker run -d -p 5001:5001 --name mtcars-api flask-app-hochan:1.0
 | `/health` | GET | Health check |
 | `/predict` | POST | Predict MPG based on car features |
 | `/model/info` | GET | Get model information and metrics |
-| `/model/retrain` | POST | Retrain the model | (WIP)
 
 
 ### 1. Health Check

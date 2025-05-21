@@ -12,7 +12,7 @@ docker pull python:3.12-slim
 
 # Create and use a new builder instance
 echo "Setting up buildx..."
-docker buildx create --use
+docker buildx create --use 
 
 # Build and push the image for both amd64 and arm64 platforms
 echo "Building and pushing image..."

@@ -1,6 +1,7 @@
 services:
   app-slim:
     build: .
+    platform: linux/amd64
     volumes:
       - ./app:/app/app
       - ./Data:/app/Data

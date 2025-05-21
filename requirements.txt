@@ -4,4 +4,5 @@ scikit-learn==1.5.1
 pandas==2.0.3
 numpy==1.26.0
 pytest==7.4.0
-
+pickle
+joblib

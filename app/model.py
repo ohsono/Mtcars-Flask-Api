@@ -1,6 +1,7 @@
 import os
 import pandas as pd
-
+import pickle
+import joblib
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
@@ -15,7 +16,7 @@ class MtcarsModel(object):
 
     """
     def __init__(self, test_size = 0.2,random_state=42):
-        self._data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Data', 'mtcars.csv')
+        self._data_path = os.path.dirname(os.path.dirname(__file__))
         self._test_size = test_size
         self._random_state = random_state
         self._model = LinearRegression()
@@ -35,7 +36,7 @@ class MtcarsModel(object):
         """
         try:
             if path is None:
-                path = self._data_path
+                path = os.path.join(self._data_path, 'Data', 'mtcars.csv')
             self._dataframe = pd.read_csv(path, index_col=0)
 
             # save all other features exclude the [label == mpg]
@@ -54,8 +55,7 @@ class MtcarsModel(object):
         if self._dataframe is None:
             self._load_data()
 
-        # Features= X
-        # target= y
+        # X = Features, y = target
         X = self._dataframe[self._features]
         y = self._dataframe['mpg']
 
@@ -65,8 +65,16 @@ class MtcarsModel(object):
         )
 
         # Train model
-        self._model.fit(X_train, y_train)
- 
+        try:
+            self._model.fit(X_train, y_train)
+            self._is_trained = True
+        except Exception as e:
+            self._is_trained = False
+            raise ValueError("fit model has some error:{}",e)
+
+        # dump the model on local
+        self._save_Model()
+
         # Calculate metrics
         self._y_pred = self._model.predict(X_test)
         
@@ -84,8 +92,9 @@ class MtcarsModel(object):
             'coefficients': self._model.coef_,
             'intercept': self._model.intercept_
         }
-        self._is_trained = True
 
+
+        
         return results
     
     def _predict(self, X):
@@ -99,19 +108,42 @@ class MtcarsModel(object):
 
         return self._model.predict(X)
 
-# def main():
-#     M = MtcarsModel(test_size=0.2, random_state=42)
-#     df = M._load_data()  # First load the data
-#     M._fit()  # Train the model
+    def _save_Model(self):
+        """
+        Save Model to pickle file 
+        """
+        import pickle
+
+        if self._model is None or self._is_trained != True:
+            raise Exception("Please train the model first!")
+
+        joblib.dump(self._model, os.path.join(self._data_path, "Data", "LinearModel.plk"))
     
-#     # Make predictions on the same data
-#     predictions = M._predict(df)
+        return True
     
-#     # Print some results
-#     print("Predictions:", predictions)
-#     print("R-squared:", M._r_squared)
-#     print("RMSE:", M._rmse)
+    # def _load_Model(self):
+    #     """
+    #     Load Model from pickle file 
+    #     """
+    #     import pickle
+    #     # load
+    #     if self._model is None:
+    #         pickle.load(open(file=self._model_filename))
+    #     return True
+
+def main():
+    M = MtcarsModel(test_size=0.2, random_state=42)
+    df = M._load_data()  # First load the data
+    M._fit()  # Train the model
+    
+    # Make predictions on the same data
+    predictions = M._predict(df)
+    
+    # Print some results
+    print("Predictions:", predictions)
+    print("R-squared:", M._r_squared)
+    print("RMSE:", M._rmse)
 
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()

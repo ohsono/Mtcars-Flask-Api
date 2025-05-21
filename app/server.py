@@ -68,3 +68,10 @@ def flask_app():
         })
 
     return app
+
+    @app.route('/retrain', methods=['GET'])
+    def retrain():
+        """
+        Retrain the model as the input coming into the system
+        """
+        return
