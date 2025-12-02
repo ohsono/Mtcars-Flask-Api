@@ -1,5 +1,5 @@
 flask==2.2.5
-werkzeug==3.0.6
+werkzeug==3.1.4
 scikit-learn==1.5.1
 pandas==2.0.3
 numpy==1.26.0
